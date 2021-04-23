@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">	
+	<style>
+		*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
+
+ }
+
+ .container {
+    display: flex;
+    flex-direction: row;
+    padding-top: 100px;   
+    margin: 0 auto;
+ }
+ .lnav{
+     width: 20%;
+     max-width:12em;
+     margin: 0 0 0 20%;
+     display: flex;
+     flex-direction: column;
+     justify-content: space-around;
+     flex-wrap:nowrap;
+     align-items: center;
+     justify-content:flex-start;
+ }
+
+ .lnav li {
+    padding-right: 2em;
+    border-bottom: #fff solid 1px;
+ }
+ .lnav li:hover{
+    list-style-type: none;
+    border-bottom: 1px solid;
+ }
+
+ table{
+    background: white;
+    width: 50%;
+    margin: 0 auto auto 5em;
+    max-width: 60em;
+    border-collapse: collapse;
+    text-align: left;
+ }
+
+ thead, tbody {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      max-width: 60em;
+  }
+
+  tr{
+      padding: 0;
+      margin: 0;
+      border-bottom: 1px solid white;
+      color: #669;
+      border-top: 1px solid transparent;
+      border: black;
+
+  }
+  
+  th.email-item{
+      padding: .5em;
+  }
+
+  th,tr:nth-of-type(even){
+      background-color: blanchedalmond;
+      text-align: center;
+  }
+  
+  tr:nth-of-type(odd){
+    background-color:cornsilk;
+    text-align: center;
+  }
+  .email-item {
+      
+    width: 50%;
+    max-width: 30em;
+    margin: 0;
+    padding: 0;
+  }
+
+  input{
+      width: 12em;
+      margin: .1em;
+      padding:.1em .5em ;
+  }
+
+
+  .email-item>input {
+        padding: .25em .5em;
+        
+        width: 100%;
+        margin: 0;
+        border: none;
+        background: none;
+        
+
+  }
+
+  input:focus, select , .email-item>input:focus {
+    outline: none;
+}
+
+input[type="file"] {
+    position: fixed;
+    right: 100%;
+    bottom: 100%;
+}
+
+li{
+    cursor:default;
+    user-select: none;
+}
+li:active{
+    cursor:pointer;
+}
+        body{
+            position: relative;
+        }
+
+        .man {
+            position:absolute;
+            background: rgba(169, 169, 169, 0.2);
+            backdrop-filter: blur(8px);
+            width: 100vw;
+            height: 100vh;
+            display: none;
+
+        }
+        .display {
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+            padding:5em;
+
+        }
+        dd{
+            padding: 2em 5em;
+        }
+        .close {
+            align-self: flex-end;
+        }
+
+
+
+	</style>
+	<title>Document</title>
+</head>
+<body>
+    <div class="man" id="man">
+        <a onclick="manual()" href="#" class="close"> закрыть </a>
+        <dl>
+            <dt>Загрузить файлом</dt>
+                <dd>Принимаются csv созданные через excel или текстовые файлы со строками вида "email,пароль" </dd>
+            <dt>Добавить</dt>
+                <dd>Добавить одну дополнительную строку для заполнения вручную</dd>
+            <dt>Отправить</dt>
+                <dd>Отправить спсиок ящиков на сервер для переноса</dd>
+            <dt>Исходящий/Входящий</dt>
+                <dd>IMAP сервера для переноса почты</dd>
+            <dt>Логин/Пароль</dt>
+                <dd>Логин и пароль от аккаунта, если заданы и верны, используются для создания в аккаунте Timeweb почтовых ящиков из списка (если они не были созданы ранее)</dd>
+        </dl>
+    </div>
+	
+	<div class="header top"></div>
+	<div class="container">
+		<div class="lnav">
+			<ul>
+				<li><a onclick="manual()">Инструкция</a></li>
+				<li>	<div class="upload_file flex row center">
+						<label for="file" class="custom-file-upload">
+						Загрузить файлом
+						</label>
+						<input class="btn" id="file" type="file">
+					
+					</div>
+				</li>
+				<li><a onclick="addemail()">Добавить</a></li>
+				<li><a onclick="send()">Отправить</a></li>
+				<li style="list-style-type:none ;     border-bottom: #fff solid 1px;">
+					<label for="src">Исходящий</label>
+					<select nmae="src" type="text" id="src" >
+                        <option>imap.masterhost.ru</option>
+                        <option>mail.hosting.reg.ru</option>
+                        <option>imap.beget.com</option>
+                        <option>mail.nic.ru</option>
+                        <option>mail.jino.ru</option>
+                        <option>imap.yandex.ru</option>
+                        <option>imap.mail.ru</option>
+                        <option>imap.gmail.com</option>
+          			</select>	
+				</li>
+				<li style="list-style-type:none; border-bottom: #fff solid 1px;">
+					<label for="dst">Входящий</label>
+					<input type="text" id="dst" name="dst" value="imap.timeweb.ru"  id="">
+				</li>
+				<li style="list-style-type:none; border-bottom: #fff solid 1px;">
+					<label for="login">Логин</label>
+					<input type="text" name="login" value=""  id="login">
+				</li>
+				<li style="list-style-type:none; border-bottom: #fff solid 1px;">
+					<label for="password">Пароль</label>
+					<input type="text" name="password" value=""  id="password">
+				</li>
+			</ul>
+		</div>
+		<table>
+			<thead>
+				<th class="email-item">email</th>
+				<th class="email-item">password</th>
+			</thead>
+			<tbody id="email-items-list">
+				<tr>
+					<td class="email-item"><input class="email" type="text"></td>
+					<td class="email-item password"><input type="text"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<script type="text/javascript">
+
+		const inputElement = document.getElementById("file");
+		inputElement.addEventListener("change", handleFiles, false);
+		var items_for_JSON = new Map()
+
+		function handleFiles() {
+			 const fileList = this.files; /* now you can work with the file list */
+			 var file = fileList[0]
+			 var reader = new FileReader()
+			 reader.onload = function() {
+			   str=reader.result
+			   res = str.split('\n')
+			   r = []
+			   res.forEach((e)=> r.push(e.trim().split(/\s/)))
+			   console.log(r)
+		
+			   let email_Items_List=document.getElementById('email-items-list');
+		
+			   while (email_Items_List.firstChild) {
+				email_Items_List.removeChild(email_Items_List.firstChild);
+			   }
+		
+			   //email_Items_List.insertAdjacentHTML('beforeend', intextstart);
+		
+			   for (let i in r) {
+				   if(r[i][0] == undefined || r[i][1] == undefined) continue;   
+				 let intext = '<tr><td class="email-item"><input class="email" type="text" value=' + r[i][0] + '> </input></td><td class="email-item"><input type="text" value=' + r[i][1] + '></input></td></tr>'
+				 email_Items_List.insertAdjacentHTML('beforeend', intext);
+				 items_for_JSON.set(r[i][0], r[i][1]);
+			   }
+		
+		
+			   console.log(items_for_JSON)
+			 }
+		
+			 reader.readAsText(file)
+		
+		}
+		
+		function addemail(){
+		
+				let email_Items_List = document.getElementById('email-items-list');
+				let intext = '<tr><td class="email-item"><input class="email" type="text"> </input></td><td class="email-item password"><input  type="text" ></input></td></tr>';
+				email_Items_List.insertAdjacentHTML('beforeend', intext);
+				}
+		
+		
+		function send(){
+
+		    const check_double_set= new Set();
+		    let check_flag = false;
+
+			let items =Array.from(document.getElementById('email-items-list').getElementsByTagName('tr'))
+
+            Array.from(document.getElementsByClassName('email') ).forEach( (e)=> {
+                if (check_double_set.has(e.value.trim())) {
+                    alert([e.value, "встречается более 1 раза, устраните дубли"])
+                    check_flag = true;
+                    }
+                else {
+                    if(e.value.trim()){
+                        check_double_set.add(e.value.trim())
+                    }
+                }
+            })
+
+            if (check_flag) {
+                return;
+            }
+
+
+
+            console.log(items)
+
+
+			items.forEach((item)=>items_for_JSON.set(item.children[0].children[0].value, item.children[1].children[0].value))
+		
+			items_for_JSON.set(
+				 'src',
+				 document.getElementById('src').value
+			   )
+			   items_for_JSON.set(
+				 'dst',
+				 document.getElementById('dst').value
+			   )
+		
+			   items_for_JSON.set(
+				 'login',
+				 document.getElementById('login').value
+		
+			   )
+			   items_for_JSON.set(
+				 'password',
+				 document.getElementById('password').value
+			   )
+		
+			   let data = JSON.stringify(items_for_JSON, (key, value) => (value instanceof Map ? [...value] : value));
+		
+			   console.log('данные для передачи:' + data)
+		
+		  // {#отправка и прием данных#}
+		   let xhr = new XMLHttpRequest();
+		   let url = document.location.pathname;
+		   xhr.open("POST", url, true);
+		   xhr.setRequestHeader('Content-Type', 'application/json');
+		   xhr.onreadystatechange = function () {
+			   if (xhr.readyState === 4 && xhr.status === 200) {
+				   
+				   console.log("Ответ от сервера через POST :")
+				   console.log(xhr.responseText)
+				   let json = JSON.parse(xhr.responseText);
+				   console.log(json.email + ", " + json.password);
+			   }
+		   };
+		
+		 xhr.send(data);
+		
+		}
+
+       function manual(){
+            let target = document.getElementById("man")
+            target.classList.toggle("display")
+
+        }
+
+
+		</script>
+	
+</body>
+</html>
