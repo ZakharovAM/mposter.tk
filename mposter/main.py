@@ -65,9 +65,8 @@ class MainObject:
         for folder in src_folders:
             if folder not in dst_folders:
                 res = folder.strip(b"'").strip(b'"').replace(self.separator_src, self.separator_dst)
-                # формат для создания почтового язика у Timeweb
-                #                 print(f'{res.strip()}'.encode().strip(b'"').strip(b"'"))
-
+                # формат для создания папки в почтовом ящике Timeweb INBOX.<название папки>
+                
                 if not res.upper().startswith(b"INBOX"):
                     res = self.separator_dst.join([b"INBOX", res])
 
@@ -119,7 +118,8 @@ class MainObject:
                 imaplib.Time2Internaldate(time.mktime(d)),
                 em.as_bytes()
             )
-            time.sleep(1)
+            #Пауза нужна чтобы почтовые сервера не обрывали соединение
+            time.sleep(.1)
             self.count += 1
             print(f"{self.count} >>> {folder} : {flag} : {num} \n ans {ans} {stat}")
 
