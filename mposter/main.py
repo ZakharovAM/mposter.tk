@@ -14,7 +14,7 @@ class MainObject:
     separator_dst = None
     mapfolders = {}
     errata = set()
-    state = True
+    state = True # флаг успешной инициализации src и dst, используется в app.py 
     count = 0
 
     @staticmethod
