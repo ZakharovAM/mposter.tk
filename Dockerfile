@@ -14,4 +14,4 @@ RUN venv/bin/pip install gunicorn
 RUN chmod +x boot.sh
 EXPOSE 5000
 RUN source ./venv/bin/activate
-ENTRYPOINT ["./boot.sh"]
+ENTRYPOINT ["sh /mposter/boot.sh"]
