@@ -1,3 +1,3 @@
 #!/bin/sh
-source venv/bin/activate
+source /mposter/venv/bin/activate
 exec gunicorn -b :5000 --access-logfile - --error-logfile - app:app
